@@ -18,6 +18,7 @@ if (!Array.prototype.filter){
         A = new Array();
         for (k=0; k<len; k++){
             kVal = O[k];
+            if (kVal === undefined) continue;
             if (callback.call(T, kVal, k, O)){
                 A.push(kVal);
             }
