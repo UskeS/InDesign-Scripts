@@ -1,0 +1,27 @@
+﻿// Production steps of ECMA-262, Edition 5.1, 15.4.4.20
+// https://www.ecma-international.org/ecma-262/5.1/#sec-15.4.4.20
+if (!Array.prototype.filter){
+    Array.prototype.filter = function (callback/*, thisArg*/){
+        'use strict';
+        var O, len, T, A, k, kVal;
+        if (this === null){
+            throw new TypeError('this is null or not defined');
+        }
+        O = new Object(this);
+        len = O.length >>> 0;
+        if (typeof callback !== 'function'){
+            throw new TypeError(callback + ' is not a function');
+        }
+        if (arguments.length > 1){
+            T = arguments[1];
+        }
+        A = new Array();
+        for (k=0; k<len; k++){
+            kVal = O[k];
+            if (callback.call(T, kVal, k, O)){
+                A.push(kVal);
+            }
+        }
+    return A;
+    };
+}
