@@ -1,11 +1,10 @@
-﻿var widths = {
-    //セル内のアキよりも小さい値などはエラーになるので注意
-    //追加するときは　n: "XXmm", のような形で記述を追加してください
-    //nは整数値のみ、 "XXmm"の部分は数値だけにするとドキュメントの単位に合わせます
-    //例）1: 15,  ←これはドキュメントの定規単位がmmであれば15mm、ptであれば15ptと解釈されます
-    //※数値のみの場合は、二重引用符は任意
-    0: "10mm", //0番目の列幅を20mmに
-    3: "80HA"  //3番目の列幅を40ptに（最後のものには,が不要）
+var widths = {
+    0: "fill",
+    1: "",
+    2: "20mm",
+    3: "16mm",
+    4: "30mm",
+    5: "fill"
 };
 
 !function () {
@@ -26,6 +25,14 @@
     }
     app.doScript(function() {
         var C = sel.columns;
+        var txfWidth = (function () {
+            var g = sel.parent.geometricBounds;
+            return g[3]-g[1];
+        })();
+        var fillCells = {
+            ary: Array(C.length),
+            sum: 0
+        };
         for (k in widths) {
             var kNum = parseInt(k,10);
             try {
@@ -36,7 +43,21 @@
                 alert(e);
                 return;
             }
-            C[k].width = widths[k];
+            if (widths[k] && widths[k] !== "fill") {
+                C[k].width = widths[k];
+                txfWidth -= C[k].width;
+            } else if (widths[k] === "fill") {
+                fillCells.ary[k] = true;
+                fillCells.sum++;
+            } else {
+                txfWidth -= C[k].width;
+            }
+        }
+        var fillWidth = txfWidth / fillCells.sum;
+        for (var i=0; i<C.length; i++) {
+            if (fillCells.ary[i]) {
+                C[i].width = fillWidth;
+            }
         }
         alert("終了しました");
     }, ScriptLanguage.JAVASCRIPT, null, UndoModes.ENTIRE_SCRIPT);
