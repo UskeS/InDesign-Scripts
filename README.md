@@ -1,5 +1,5 @@
 # InDesign-Scripts
-Scripts of ExtendScript for Adobe InDesign.  
+ExtendScript for Adobe InDesign.  
 Adobe InDesign用のスクリプトです。
 
 ## Getting Started
