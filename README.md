@@ -14,7 +14,7 @@ jsxincファイルは読み込み用のモジュールです。
 段落の選択を補助するスクリプト。types-for-adobeによるTypeScriptでの開発第一号です。  
 実際にInDesignで使うには、トランスパイルされた.jsファイルを利用してください。  
 詳細は[当方ブログ記事](http://uske-s.hatenablog.com/entry/2019/02/02/231828)にアップしています。  
-### 動作画面
+[動作画面](https://raw.github.com/wiki/UskeS/InDesign-Scripts.wiki/image/assistSelectParagraph.gif)
 
 ## array_whose.jsxinc
 AppleScriptにあるwhoseメソッドを模して、Arrayオブジェクトをプロトタイプ拡張したものです。  
