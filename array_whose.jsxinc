@@ -1,0 +1,13 @@
+if (!Array.prototype.whose) {
+    Array.prototype.whose = function(obj) {
+        var that = this, result = [];
+        for (var i=0, len=that.length; i<len; i++) {
+            for (var key in obj) {
+                if (that[i].hasOwnProperty(key) && that[i][key] === obj[key]) {
+                    result.push(that[i]);
+                }
+            }
+        }
+        return result;
+    };
+}
