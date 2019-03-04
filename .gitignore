@@ -1,0 +1,22 @@
+#---------------- About files
+*.log
+*.sql
+*.sqlite
+
+#---------------- OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+#---------------- npm specific files
+package.json
+package-lock.json
+node_modules/
+
+#--Adobe ExtendScript Debugger
+launch.json
