@@ -1,0 +1,12 @@
+var idUtil = {};
+
+/**
+ * 与えたファイルパスからファイル名を除外したフォルダパスを返す
+ * 
+ * @param {string} fn ファイルパス
+ * @return {string} ファイル名を除いたフォルダパス
+ */
+idUtil.getFolderPath = function(fn) {
+    return fn.replace(/[^\/]+$/, "");
+};
+

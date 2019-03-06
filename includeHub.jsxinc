@@ -1,0 +1,7 @@
+﻿//scriptModulesフォルダにあるjsxincファイルを一覧で取得
+var myPath = $.fileName.replace(/[^\/]+$/, "scriptModules/");
+var folderRef = new Folder (myPath);
+var tgtIncList = folderRef.getFiles("*.jsxinc");
+for (var i=0; i<tgtIncList.length; i++) {
+	eval('#include "' + myPath + decodeURI(tgtIncList[i].name) + '"');
+}
