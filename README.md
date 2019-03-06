@@ -21,10 +21,17 @@ jsxincファイルは読み込み用のモジュールです。
 ### 動作画面
 ![assistselectparagraph](https://user-images.githubusercontent.com/32891783/52755826-a5d9cd00-3042-11e9-8c0c-2c3e1a8ba560.gif)
 
+# scriptModules
+開発を手助けするモジュール群です。随時追加していきます。
 ## array_whose.jsxinc
 AppleScriptにあるwhoseメソッドを模して、Arrayオブジェクトをプロトタイプ拡張したものです。  
+もうちょっと改良する予定。
 ### サンプルコード
 ```
 var paraStyles = app.activeDocument.allPagraphStyles;
 var tgtParaStyle = paraStyles.whose({name: "hoge"});
 ```
+## IdUtil.jsxinc
+主にInDesign用のお助けモジュール。  
+そのうち増えていくのでお待ち下さい。  
+細かい使い方についてはいずれJSDocを用意する予定です。
