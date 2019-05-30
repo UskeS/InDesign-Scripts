@@ -21,6 +21,15 @@ jsxincファイルは読み込み用のモジュールです。
 ### 動作画面
 ![assistselectparagraph](https://user-images.githubusercontent.com/32891783/52755826-a5d9cd00-3042-11e9-8c0c-2c3e1a8ba560.gif)
 
+## genCaption
+### 概要
+選択したオブジェクトの下部にまとめてテキストフレームを生成するスクリプト。  
+オブジェクトスタイルを充てた状態で生成するのがポイント。  
+詳細は当方ブログ記事にアップしています。  
+オブジェクトスタイルリストを更新したい場合は、ダイアログを閉じて再度スクリプトを実行し直してください。
+### 動作画面
+![0530-5](https://user-images.githubusercontent.com/32891783/58630231-bbd17c00-8319-11e9-85c7-34664841bc2f.gif)
+
 # scriptModules
 開発を手助けするモジュール群です。随時追加していきます。
 ## array_whose.jsxinc
