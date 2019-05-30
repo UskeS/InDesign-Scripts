@@ -1,3 +1,9 @@
+/**
+ * @fileoverview 選択したオブジェクトの下にオブジェクトスタイルを充てたテキストフレームを生成する
+ * @author Uske_S
+ * @version 0.1.0
+ */
+
 if (app.documents.length === 0) {exit();}
 if (app.activeDocument.selection.length === 0) {exit();}
 
