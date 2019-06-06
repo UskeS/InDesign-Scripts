@@ -1,14 +1,14 @@
 /**
  * @fileoverview 選択したオブジェクトの下にオブジェクトスタイルを充てたテキストフレームを生成する
  * @author Uske_S
- * @version 0.2.0 SUIダイアログをpaletteに変更
+ * @version 0.2.1 ドキュメントの1ページ目にしかテキストフレームが生成されないのを修正
  */
 
 //@targetengine session
 
 (function(){
     //--　変数・関数定義　--//
-    var scriptInfo = "v0.2.0 ©2019 Uske_S";
+    var scriptInfo = "v0.2.1 ©2019 Uske_S";
     var doc, sel, objs, tgtObjs;
     main();
 
@@ -52,7 +52,7 @@
         if (!doc.objectStyles.itemByID(styleID).isValid) {
             alert("オブジェクトスタイルが参照できません");
         }
-        return doc.textFrames.add({
+        return doc.textFrames.add(undefined, LocationOptions.AFTER, obj, {
             appliedObjectStyle: doc.objectStyles.itemByID(styleID),
             visibleBounds: [vb[2], vb[1], vb[2]+10, vb[1]+wid],
             contents: text
