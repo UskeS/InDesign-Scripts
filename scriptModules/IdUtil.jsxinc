@@ -1,4 +1,4 @@
-var idUtil = {};
+var Util = {};
 
 /**
  * 与えたファイルパスからファイル名を除外したフォルダパスを返す
@@ -6,7 +6,63 @@ var idUtil = {};
  * @param {string} fn ファイルパス
  * @return {string} ファイル名を除いたフォルダパス
  */
-idUtil.getFolderPath = function(fn) {
+Util.getFolderPath = function(fn) {
     return fn.replace(/[^\/]+$/, "");
 };
 
+/**
+ * シェルのdateコマンド様のタイムスタンプを取得する
+ * 
+ * @param {string} [text="%Y%m%d%H%M%S"] dateコマンド形式を含む文字列。
+ *     %Y:西暦、%y:西暦の下2桁、%-y:西暦の下2桁（ゼロパディングなし）、
+ *     %m:月（ゼロパディングあり）、%-m:月（なし）、
+ *     %u:曜日（0:日曜〜6:土曜）、%w:曜日（1:日曜〜7:土曜）、
+ *     %d:日（ゼロパディングあり）、%-d:日（なし）、%H:時（ゼロパディングあり）、%-H:時（なし）、
+ *     %M:分（ゼロパディングあり）、%-M:分（なし）、%S:秒（ゼロパディングあり）、%-S:秒（なし）、
+ *     %%:%文字、%n:改行、%t:タブ、%D:%m/%d/%y、%F:%Y-%m-%-d、%R:%H:%M、%T:%H:%M:%S、
+ *     falsyを渡すとデフォルト値「%Y%m%d%H%M%S」を利用する
+ * @throws {string} 渡されたテキストに改行文字が含まれるときはエラー
+ * @return {string} 指定された形式のタイムスタンプ
+ */
+Util.getDate = function(text) {
+    if (/[\r\n]/.test(text)) {
+        throw new Error("改行文字を含むテキストには利用できません");
+    }
+    if (!text) {
+        text = "%Y%m%d%H%M%S"; //デフォルト値
+    }
+    var T = new Date();
+    var O = {
+        "%Y": T.getFullYear(),
+        "%y": T.getFullYear().toString().slice(-2),
+        "%-y": parseInt(T.getFullYear().toString().slice(-2), 10),
+        "%m": ("0" + (T.getMonth()+1)).slice(-2),
+        "%-m": T.getMonth() + 1,
+        "%u": T.getDay(),
+        "%w": T.getDay() + 1,
+        "%d": ("0" + T.getDate()).slice(-2),
+        "%-d": T.getDate(),
+        "%H": ("0" + T.getHours()).slice(-2),
+        "%-H": T.getHours(),
+        "%M": ("0" + T.getMinutes()).slice(-2),
+        "%-M": T.getMinutes(),
+        "%S": ("0" + T.getSeconds()).slice(-2),
+        "%-S": T.getSeconds(),
+        "%%": "%",
+    };
+    O["%D"] = O["%m"] + "/" + O["%d"] + "/" + O["%y"];
+    O["%F"] =  O["%Y"] + "-" + O["%m"] + "-" + O["%d"];
+    O["%R"] = O["%H"] + ":" + O["%M"];
+    O["%T"] =  O["%H"] + ":" + O["%M"] + ":" + O["%S"];
+
+    var re = /%-?[%YymuwdHMSDFRTt]/gm;
+    var find;
+    while(find = re.exec(text)) {
+        if (!find[0]) {continue;}
+        if (!O[find[0]]) {continue;}
+        text = text.replace(find[0], O[find[0]]);
+    }
+    text = text.replace(/%n/g, String.fromCharCode(13));
+    text = text.replace(/%t/g, String.fromCharCode(9));
+    return text;
+};
