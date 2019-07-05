@@ -1,28 +1,5 @@
 var Util = {};
 
-//
-// プロトタイプ拡張
-//
-
-/**
- * 簡易的toFixedメソッド。本家のtoFixedと違うのは
- *  <ul>
- *   <li>四捨五入の精度が高い（Math.roundメソッドを利用）
- *   <li>桁数以上の引数を渡しても0でパディングしない
- *  </ul>
- * @param {number} num 四捨五入して表示する小数点以下の桁数
- * @return {number} 指定した小数点以下の桁数で四捨五入された値
- */
-Number.prototype._toFixed = function(num) {
-    if (num < 0 || parseInt(num, 10) !== num) {
-        throw new RangeError("正の整数を引数に渡してください");
-    }
-    if (num.constructor !== Number) {
-        throw new TypeError("正の整数（数値型）を引数に渡してください")
-    }
-    return Math.round(this * Math.pow(10, num)) / Math.pow(10, num);
-}
-
 /**
  * 与えたファイルパスからファイル名を除外したフォルダパスを返す
  * 
