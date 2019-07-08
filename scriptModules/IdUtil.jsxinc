@@ -67,26 +67,31 @@ Util.getDate = function(text) {
     return text;
 };
 
+/**
+ * ファイルを読み込む
+ * 
+ * @param {string} filePath ファイルパス
+ * @param {object} option Fileオブジェクトのオプション（encodingなどを渡す）
+ */
 Util.readFile = function(filePath, option) {
     var F = File(filePath);
-    var k, r, er, flag = false;
+    var k, r, er;
     if (!F.exists) {
         return null;
     }
     try {
         F.open("r");
-        for (k in F) {
+        for (k in option) {
             F[k] = option[k];
         }
         r = F.read();
-        flag = true;
     } catch(e) {
         er = e;
     } finally {
         F.close();
-    }
-    if (!flag) {
-        throw new Error(er);
+        if (er) {
+            throw new Error(er);
+        }
     }
     return r;
 }
