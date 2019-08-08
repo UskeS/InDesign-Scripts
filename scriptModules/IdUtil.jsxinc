@@ -94,4 +94,17 @@ Util.readFile = function(filePath, option) {
         }
     }
     return r;
-}
+};
+
+Util.regexModule = function(target, findChange, findOption, changeOption) {
+    var method = findChange + "Grep";
+    if (findChange !== "find" && findChange !== "change") {
+        throw new ReferenceError("第二引数は'find'か'change'です");
+    }
+    app.findGrepPreferences = app.changeGrepPreferences = null;
+    app.findGrepPreferences.properties = findOption;
+    if (changeOption) {
+        app.changeGrepPreferences.properties = changeOption;
+    }
+    return target[method]();
+};
