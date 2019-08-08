@@ -108,3 +108,36 @@ Util.regexModule = function(target, findChange, findOption, changeOption) {
     }
     return target[method]();
 };
+
+/**
+ * テキストファイルを書き出し
+ *
+ * @param {string} contents 書き出すテキスト内容
+ * @param {string} filePath テキストファイルのパス
+ * @param {string} mode 'w'新規・上書きか、'a'末尾に追記
+ * @return {boolean} ファイルの書き出しに成功したかどうか
+ */
+Util.exportTextFile = function(contents, filePath, mode) {
+    var F, flag;
+    if (!contents || contents.constructor.name !== "String") {
+        throw new Error("出力する文字列（第一引数）が不正です");
+    }
+    if (mode !== "w" && mode !== "a") {
+        throw new Error("第三引数は'w'（上書き）か'a'（末尾に追記）を指定してください");
+    }
+    try {
+        F = new File(filePath);
+        F.open(mode);
+        F.encoding = "UTF-8";
+        F.write(contents);
+        flag = true;
+    } catch(e) {
+        alert(e);
+    } finally {
+        F.close();
+    }
+    if (!flag) {
+        return false;
+    }
+    return true;
+};
