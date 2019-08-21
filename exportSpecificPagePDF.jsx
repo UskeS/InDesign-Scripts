@@ -1,12 +1,12 @@
 /**
  * @fileoverview ページパネルで選択したページのみをPDFとして書き出す（PDF書き出しダイアログを開く）スクリプト
  * @author Yusuke SAEGUSA(Uske_S)
- * @version 0.0.1
+ * @version 0.0.2 とりあえず版
  */
 
 //@target "indesign"
 
-app.doScipt(function() {
+app.doScript(function() {
     //-- 変数定義 --//
     var doc, pag, exPageColors, tgtPages, tgtFolder, fileName;
     /** 
@@ -84,11 +84,20 @@ app.doScipt(function() {
         act.invoke();
     } else {
         alert("ページパネルからアクションを実行できませんでした。スクリプトを中断します");
+        returnPageColor(exPageColors);
         exit();
     }
     tgtPages = getColoredPages(clr.en);
     tgtFolder = Folder.selectDialog("PDF書き出し先のフォルダを選択");
+    if (!tgtFolder) {
+        returnPageColor(exPageColors);
+        exit();
+    }
     fileName = prompt("PDFのファイル名を入力（拡張子まで含めて入力）", decodeURI(doc.name).replace(/\.indd$/, ".pdf"));
+    if (!fileName) {
+        returnPageColor(exPageColors);
+        exit();
+    }
     openExportDialog(tgtPages, new File(tgtFolder.fsName+"/"+fileName));
     returnPageColor(exPageColors);
 
