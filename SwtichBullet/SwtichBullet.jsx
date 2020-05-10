@@ -1,7 +1,7 @@
 /**
  * fileoverview 選択している段落の箇条書きマーカーを変更する
  * @author SAEGUSA Yusuke
- * @version 0.0.1
+ * @version 0.0.2 ファイル名の参照を変数対応にした
  */
 
 //@targetengine "SwitchBullet"
@@ -12,6 +12,7 @@ if (app.documents.length === 0 || app.selection.length === 0) {
 
 var doc = app.activeDocument;
 var sel = doc.selection[0];
+var configFileName = "SwitchBulletConfig.txt";
 
 if (!sel.hasOwnProperty("bulletChar")) {
     myError("001");
@@ -28,8 +29,12 @@ if (nextBullet >= myConfig.length) {
 sel.bulletChar.properties = myConfig[nextBullet].bulletOptions;
 sel.bulletsTextAfter = myConfig[nextBullet].bulletsTextAfter;
 
+/**
+ * 設定を読み込んでオブジェクトの配列として返す
+ * @returns {Objcect[]}
+ */
 function getConfig() {
-    var fObj = File($.fileName.replace(/[^\/]+$/, "SwitchBulletConfig.txt"));
+    var fObj = File($.fileName.replace(/[^\/]+$/, configFileName));
     var fFlag = false;
     var result = [];
     if (!fObj.exists) {
@@ -68,6 +73,10 @@ function getConfig() {
     return result;
 }
 
+/**
+ * 設定に記述されたフォントが利用可能かどうか確認する
+ * @param {Object[]} confObj 
+ */
 function verifyFonts(confObj) {
     var erFonts = [];
     for (var i=0; i<confObj.length; i++) {
@@ -84,6 +93,11 @@ function verifyFonts(confObj) {
     }
 }
 
+/**
+ * 現在適用されている箇条書き記号を設定と比較し、設定の何番目が適用されているかを返す
+ * @param {Objcect[]} conf 
+ * @returns {number} 設定のインデックス
+ */
 function getCurrentBullet(conf) {
     var cur = sel.bulletChar;
     for (var i=0; i<conf.length; i++) {
@@ -97,14 +111,18 @@ function getCurrentBullet(conf) {
     return 0;
 }
 
+/**
+ * エラー終了関数
+ * @param {string} erNum - エラー番号
+ */
 function myError(erNum) {
     var errorMessage = {
         "001": "テキストを選択してから実行してください",
-        "002": "設定ファイル SwitchBulletConfig.txt が見つかりません",
-        "003": "設定ファイル SwitchBulletConfig.txt が正しく読み込めませんでした",
-        "004": "設定ファイル SwitchBulletConfig.txt の内容が不正です",
-        "005": "設定ファイル SwitchBulletConfig.txt に指定される以下のフォントが利用できません\r" + arguments[1],
-        "006": "設定ファイル SwitchBulletConfig.txt に数値に変換できないGID値が記述されています",
+        "002": "設定ファイル " + configFileName + " が見つかりません",
+        "003": "設定ファイル " + configFileName + " が正しく読み込めませんでした",
+        "004": "設定ファイル " + configFileName + " の内容が不正です",
+        "005": "設定ファイル " + configFileName + " に指定される以下のフォントが利用できません\r" + arguments[1],
+        "006": "設定ファイル " + configFileName + " に数値に変換できないGID値が記述されています",
     };
     alert(erNum + ": " + errorMessage[erNum]);
     exit();
