@@ -20,9 +20,7 @@ app.findGrepPreferences = app.changeGrepPreferences = null;
 app.findGrepPreferences.appliedParagraphStyle = sel.appliedParagraphStyle;
 var found = curStory.findGrep();
 var result = false;
-$.writeln("cur: "+curIndex);
 for (var i=found.length-1; i>=0; i--) {
-    $.writeln("found: "+found[i].index);
     if (found[i].index < curIndex) {
         found[i].select();
         found[i].showText();
